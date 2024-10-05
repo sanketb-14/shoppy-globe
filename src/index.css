@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+.pacifico {
+  font-family: 'Pacifico', cursive;
+}
+
+.btn-gradient {
+  @apply  btn btn-sm sm:btn-md bg-gradient-to-r from-primary to-secondary text-white border-none;
+}
+
+.btn-gradient:hover {
+  @apply bg-gradient-to-r from-secondary to-primary;
+}
