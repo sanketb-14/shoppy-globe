@@ -5,6 +5,7 @@ import { addToCart } from '../redux/features/cartSlice';
 import { motion } from 'framer-motion';
 import { FaShoppingCart, FaStar, FaTags, FaBox, FaExchangeAlt, FaCheck } from 'react-icons/fa';
 import Loader from './Loader';
+import Error from './Error';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -44,8 +45,8 @@ const ProductDetail = () => {
   };
 
   if (loading) return <Loader />;
-  if (error) return <div>Error: {error}</div>;
-  if (!product) return <div>Product not found</div>;
+  if (error) return <Error />;
+  if (!product) return <Error />;
 
   return (
     <div className="container mx-auto mt-8 px-4">
@@ -156,3 +157,13 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
+
+// useEffect hook: Fetches product details from API when component mounts or 'id' changes
+
+// motion components: Add animations to UI elements
+
+// Conditional rendering: Displays different content based on loading and error states
+
+// Dynamic className: Changes button appearance based on cart addition status
+
+// map function: Renders a motion.span for each product tag

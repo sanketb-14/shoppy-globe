@@ -3,10 +3,15 @@ import { motion } from 'framer-motion';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 const ChangeTheme = () => {
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  // Initialize theme state based on current document theme
+  const [isDarkTheme, setIsDarkTheme] = useState(() => {
+    return document.documentElement.getAttribute('data-theme') === 'night';
+  });
+  // Set initial mobile state based on window width
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
+    // Update mobile state on window resize
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
@@ -15,6 +20,7 @@ const ChangeTheme = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Toggle theme between dark and light
   const toggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
     document.documentElement.setAttribute('data-theme', isDarkTheme ? 'winter' : 'night');

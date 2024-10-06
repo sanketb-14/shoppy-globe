@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { FaShoppingCart, FaHome } from 'react-icons/fa';
+import { FaHome } from 'react-icons/fa';
 import logo from "../assets/logo.png";
 import ChangeTheme from './ChangeTheme';
 
@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 
 const Header = () => {
   const cartItems = useSelector(state => state.cart);
+  // Calculate total number of items in the cart
   const cartItemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
@@ -28,6 +29,7 @@ const Header = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 2, ease: "easeInOut" }}
           >
+            {/* Animate each letter of "ShoppyGlobe" individually */}
             {[..."ShoppyGlobe"].map((letter, index) => (
               <motion.span
                 key={index}
@@ -45,7 +47,7 @@ const Header = () => {
             <li>
               <Link to="/" className="btn btn-gradient hover:btn-gradient-hover">
                 <FaHome className="mr-1" />
-                Home
+                <span className="hidden sm:block">Home</span>
               </Link>
             </li>
             <li>
@@ -73,6 +75,7 @@ const Header = () => {
                     className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow">
                     <div className="card-body">
                       <span className="text-lg font-bold">{cartItemCount} Items</span>
+                      {/* Calculate and display total price of items in the cart */}
                       <span className="text-info">Subtotal: ${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</span>
                       <div className="card-actions">
                         <Link to="/cart" className="btn btn-gradient hover:btn-gradient-hover w-full">View cart</Link>

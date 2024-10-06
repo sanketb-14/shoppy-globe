@@ -7,6 +7,7 @@ import { FaHome, FaBox, FaUser, FaCalendarAlt, FaTruck, FaShoppingCart } from 'r
 const OrderConfirmation = () => {
   const { items, user, isOrderPlaced } = useSelector((state) => state.order);
 
+  // Redirect to home if no order is placed
   if (!isOrderPlaced) {
     return <Navigate to="/" />;
   }
@@ -15,7 +16,7 @@ const OrderConfirmation = () => {
   const deliveryDate = new Date();
   deliveryDate.setDate(deliveryDate.getDate() + 5);
 
- 
+  // Calculate total price of items in the order
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
@@ -81,6 +82,7 @@ const OrderConfirmation = () => {
             </h3>
             <p className="flex items-center">
               <FaTruck className="mr-2" />
+              {/* Formats the delivery date in a human-readable format */}
               {deliveryDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
             </p>
           </motion.div>

@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchProducts } from '../redux/features/productSlice';
-import { addToCart } from '../redux/features/cartSlice'; // Add this import
-import { motion } from 'framer-motion';
-import { FaSearch, FaStar, FaEye, FaShoppingCart } from 'react-icons/fa';
+import { addToCart } from '../redux/features/cartSlice';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaSearch, FaStar, FaEye, FaShoppingCart, FaCheckCircle }
+ from 'react-icons/fa';
+
 import Carousel from './Corousel';
 import Loader from './Loader';
+import Error from './Error';
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -14,7 +17,9 @@ const ProductList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [notification, setNotification] = useState(null);
 
+  // Creates an array of unique categories, including 'All' at the beginning
   const categories = ['All', ...new Set(allProducts.map(product => product.category))];
 
   useEffect(() => {
@@ -27,6 +32,7 @@ const ProductList = () => {
     filterProducts();
   }, [selectedCategory, allProducts, searchTerm]);
 
+  // Filters products based on selected category and search term
   const filterProducts = () => {
     let filtered = allProducts;
     if (selectedCategory !== 'All') {
@@ -49,6 +55,12 @@ const ProductList = () => {
 
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
+    setNotification(product.title.split(' ').slice(0, 2).join(' ') + "...");
+    setTimeout(() => setNotification(null), 1000);
+  };
+
+  const handleRetry = () => {
+    dispatch(fetchProducts());
   };
 
   if (status === 'loading') {
@@ -56,12 +68,29 @@ const ProductList = () => {
   }
 
   if (status === 'failed') {
-    return <div>Error: {error}</div>;
+    return (
+      <Error />
+    );
   }
 
   return (
     <div className='w-full max-w-6xl flex flex-col items-center justify-center m- sm:m-4 p-2 sm:p-4 bg-base-100'>
+      {/* Notification */}
+      <AnimatePresence>
+        {notification && (
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            className="fixed top-20 right-4 bg-green-500 text-white p-4 rounded-lg shadow-lg z-50 flex items-center"
+          >
+            <FaCheckCircle className="mr-2" />
+            <span>{notification} added to cart!</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
       
+      {/* Animated search input that expands on focus */}
       <motion.div
         className="w-full max-w-md relative mb-8"
         initial={{ width: "80%" }}
@@ -99,6 +128,7 @@ const ProductList = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-base-100 font-pacifico">
         {filteredProducts.map(product => (
+          // Animated product card with hover and tap effects
           <motion.div
             key={product.id}
             className="bg-gradient-to-b from-primary/20 to-null my-4 mx-1 p-2 sm:p-6 rounded-xl shadow-xl overflow-hidden"

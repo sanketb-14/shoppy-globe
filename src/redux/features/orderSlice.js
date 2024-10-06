@@ -23,3 +23,8 @@ const orderSlice = createSlice({
 
 export const { placeOrder, clearOrder } = orderSlice.actions;
 export default orderSlice.reducer;
+
+// createSlice: Creates a slice of the Redux store with reducers and actions
+// placeOrder: Updates state with order details and marks order as placed
+// clearOrder: Resets the order state to initial values
+// Export: Exports individual action creators and the reducer

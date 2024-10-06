@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import Loader from './components/Loader';
 
-// Lazy load components
+// Lazy load components for code splitting and improved performance
 const Header = lazy(() => import('./components/Header'));
 const ProductList = lazy(() => import('./components/ProductList'));
 const ProductDetail = lazy(() => import('./components/ProductDetail'));
@@ -13,6 +13,7 @@ const Checkout = lazy(() => import('./components/Checkout'));
 const NotFound = lazy(() => import('./components/NotFound'));
 const OrderConfirmation = lazy(() => import('./components/OrderConfirmation'));
 
+// Layout component that wraps the entire app and provides a common structure
 const Layout = () => (
   <div className="min-h-screen bg-base-100 w-full flex flex-col items-center ">
     <Suspense fallback={<Loader />}>
@@ -24,6 +25,7 @@ const Layout = () => (
   </div>
 );
 
+// Router configuration using createBrowserRouter
 const router = createBrowserRouter([
   {
     path: '/',
@@ -39,6 +41,7 @@ const router = createBrowserRouter([
   },
 ]);
 
+// Main App component that provides Redux store and routing to the entire application
 const App = () => {
   return (
     <Provider store={store}>

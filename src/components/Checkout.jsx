@@ -15,22 +15,22 @@ const Checkout = () => {
     address: ''
   });
 
+  // Calculate the total price of items in the cart
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
+  // Update form data when input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Handle form submission, place order, clear cart, and navigate to confirmation
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Dispatch order data to Redux store
     dispatch(placeOrder({
       items: cartItems,
       user: formData
     }));
-    // Clear the cart
     dispatch(clearCart());
-    // Redirect to order confirmation page
     navigate('/order-confirmation');
   };
 

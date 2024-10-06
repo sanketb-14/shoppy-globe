@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+// Creates an async thunk to fetch all products
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
   async () => {
@@ -9,7 +10,7 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
-// Add this new action
+// Creates an async thunk to filter products by category
 export const filterProductsByCategory = createAsyncThunk(
   'products/filterProductsByCategory',
   async (category) => {
@@ -25,15 +26,22 @@ export const filterProductsByCategory = createAsyncThunk(
   }
 );
 
+// Creates a slice for products with initial state and extra reducers
 const productsSlice = createSlice({
   name: 'products',
   initialState: {
     items: [],
-    
     status: 'idle',
     error: null,
+    selectedCategory: 'All', // Add this line
   },
-  reducers: {},
+  reducers: {
+    setSelectedCategory: (state, action) => {
+      state.selectedCategory = action.payload;
+    },
+  },
+  
+  // Handles different states of async operations
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
@@ -61,4 +69,5 @@ const productsSlice = createSlice({
   },
 });
 
+export const { setSelectedCategory } = productsSlice.actions; 
 export default productsSlice.reducer;
