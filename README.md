@@ -1,5 +1,7 @@
 # Shoppy-Globe: Modern E-commerce Platform
 
+### Live Link: [Shoppy-Globe](https://shoppy-globe-14.vercel.app/)
+
 Shoppy-Globe is a feature-rich e-commerce platform built with cutting-edge technologies to provide a seamless shopping experience.
 
 ## Features
