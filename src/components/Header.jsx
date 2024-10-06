@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FaShoppingCart, FaHome } from 'react-icons/fa';
-
+import logo from "../assets/logo.png";
 import ChangeTheme from './ChangeTheme';
 
 import { motion } from 'framer-motion';
@@ -14,14 +14,14 @@ const Header = () => {
     <header className="navbar bg-base-100 text-primary">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="flex items-center">
-          {/* <motion.img
+          <motion.img
             src={logo}
             alt="ShoppyGlobe Logo"
             className="w-12 sm:w-16 h-12 sm:h-16 mr-2"
             initial={{ opacity: 0 , scale: 0.5}}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 2, ease: "linear" }}
-          /> */}
+          />
           <motion.span 
             className="text-2xl sm:text-5xl tracking-wider font-bold font-['Dancing_Script']"
             initial={{ opacity: 0 }}
